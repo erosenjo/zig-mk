@@ -4,6 +4,7 @@
 
 //function that outputs 1
 
-//function that converts desired color combo into 24bit int
+//function that converts desired color combo (hexcode) into 24bit int
+//NOTE: the order of the 24bit is GRB whereas hex is RGB
 
 //output a 24bit
