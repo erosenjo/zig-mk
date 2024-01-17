@@ -11,11 +11,11 @@ const gpio = rp2040.gpio;
 const clocks = rp2040.clocks;
 const usb = rp2040.usb;
 
-const led = gpio.num(25);
-const uart = rp2040.uart.num(0);
-const baud_rate = 115200;
-const uart_tx_pin = gpio.num(0);
-const uart_rx_pin = gpio.num(1);
+//const led = gpio.num(25);
+//const uart = rp2040.uart.num(0);
+//const baud_rate = 115200;
+//const uart_tx_pin = gpio.num(0);
+//const uart_rx_pin = gpio.num(1);
 
 // First we define two callbacks that will be used by the endpoints we define next...
 fn ep1_in_callback(dc: *usb.DeviceConfiguration, data: []const u8) void {
@@ -79,8 +79,8 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .length = @as(u8, @intCast(@sizeOf(usb.DeviceDescriptor))),
         .descriptor_type = usb.DescType.Device,
         .bcd_usb = 0x0200,
-        .device_class = 0,
-        .device_subclass = 0,
+        .device_class = 0, //Update: ok to be 0: before thought maybe should be 3? https://www.usb.org/defined-class-codes#anchor_BaseClass00h
+        .device_subclass = 0, //
         .device_protocol = 0,
         .max_packet_size0 = 64,
         .vendor = 0xCafe,
@@ -156,18 +156,18 @@ pub const std_options = struct {
 };
 
 pub fn main() !void {
-    led.set_function(.sio);
-    led.set_direction(.out);
-    led.put(1);
+    //led.set_function(.sio);
+    //led.set_direction(.out);
+    //led.put(1);
 
-    uart.apply(.{
-        .baud_rate = baud_rate,
-        .tx_pin = uart_tx_pin,
-        .rx_pin = uart_rx_pin,
-        .clock_config = rp2040.clock_config,
-    });
+    //uart.apply(.{
+    //    .baud_rate = baud_rate,
+    //    .tx_pin = uart_tx_pin,
+    //    .rx_pin = uart_rx_pin,
+    //    .clock_config = rp2040.clock_config,
+    //});
 
-    rp2040.uart.init_logger(uart);
+    //rp2040.uart.init_logger(uart);
 
     // First we initialize the USB clock
     rp2040.usb.Usb.init_clk();
@@ -184,7 +184,7 @@ pub fn main() !void {
         new = time.get_time_since_boot().to_us();
         if (new - old > 500000) {
             old = new;
-            led.toggle();
+            //led.toggle();
         }
     }
 }
