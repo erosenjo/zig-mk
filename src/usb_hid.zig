@@ -84,7 +84,7 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .device_subclass = 0,
         .device_protocol = 0,
         .max_packet_size0 = 16,//16 byte max packet size for 14 keys at once to start, changed from 64
-        .vendor = 0x0000, // set to 0 for now
+        .vendor = 0x0000, // set to 0 for now, would probably be ok to set to the raspberry pi VID if they have one
         .product = 1,
         .bcd_device = 0x0100,
         // Those are indices to the descriptor strings
@@ -101,9 +101,12 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .alternate_setting = 0,
         // We have two endpoints (EP0 IN/OUT don't count)
         .num_endpoints = 2,
-        .interface_class = 3,
-        .interface_subclass = 0,
-        .interface_protocol = 0,
+        .interface_class = 3, //HID
+        .interface_subclass = 0, //device supports report protocol
+        // because we are using a non-standard rollover, we should use report protocol?
+        // https://deskthority.net/wiki/USB#:~:text=Keyboard%20Boot%20Protocol,-To%20avoid%20complexity&text=Being%20%22boot%2Dcapable%22%20means,simpler%20USB%20stack%20would%20understand.
+
+        .interface_protocol = 1, //device is keyboard https://wiki.osdev.org/USB_Human_Interface_Devices#Protocol
         .interface_s = 0,
     },
     .config_descriptor = &.{
