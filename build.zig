@@ -23,7 +23,7 @@ pub fn build(b: *std.Build) void {
     // The target will convey all necessary information on the chip,
     // cpu and potentially the board as well.
     const firmware = microzig.addFirmware(b, .{
-        .name = "activity",
+        .name = "zig-mk",
         .target = rp2040.boards.raspberry_pi.pico,
         .optimize = optimize,
         .source_file = .{ .path = "src/main.zig" },
