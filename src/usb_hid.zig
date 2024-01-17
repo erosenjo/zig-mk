@@ -80,6 +80,7 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .descriptor_type = usb.DescType.Device,
         .bcd_usb = 0x0200,
         .device_class = 0, //Update: ok to be 0: before thought maybe should be 3? https://www.usb.org/defined-class-codes#anchor_BaseClass00h
+        //link: https://www.usbmadesimple.co.uk/ums_ms_desc_dev.htm
         .device_subclass = 0, //
         .device_protocol = 0,
         .max_packet_size0 = 64,
