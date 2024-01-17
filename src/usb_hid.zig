@@ -81,10 +81,10 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .bcd_usb = 0x0200,
         .device_class = 0, //Update: ok to be 0: before thought maybe should be 3? https://www.usb.org/defined-class-codes#anchor_BaseClass00h
         //link: https://www.usbmadesimple.co.uk/ums_ms_desc_dev.htm
-        .device_subclass = 0, //
+        .device_subclass = 0,
         .device_protocol = 0,
-        .max_packet_size0 = 64,
-        .vendor = 0xCafe,
+        .max_packet_size0 = 16,//16 byte max packet size for 14 keys at once to start, changed from 64
+        .vendor = 0x0000, // set to 0 for now
         .product = 1,
         .bcd_device = 0x0100,
         // Those are indices to the descriptor strings
@@ -124,7 +124,7 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         //"P\x00i\x00c\x00o\x00 \x00T\x00e\x00s\x00t\x00 \x00D\x00e\x00v\x00i\x00c\x00e\x00",
         &usb.utf8ToUtf16Le("Pico Test Device"),
         //"c\x00a\x00f\x00e\x00b\x00a\x00b\x00e\x00",
-        &usb.utf8ToUtf16Le("cafebabe"),
+        &usb.utf8ToUtf16Le("Emerson and Rosie"),
     },
     .hid = .{
         .hid_descriptor = &.{
