@@ -73,6 +73,8 @@ pub var EP1_IN_CFG: usb.EndpointConfiguration = .{
     .callback = ep1_in_callback,
 };
 
+const ReportDescriptorZigMK = usb.hid.hid_usage_page(2, "\x05\x01".*) ++ usb.hid.hid_usage(1, "\x09\x06".*) ++ usb.hid.hid_collection(usb.hid.CollectionItem.Application) ++ usb.hid.hid_usage(1, "\x05\x07".*);
+
 // This is our device configuration
 pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
     .device_descriptor = &.{
@@ -83,7 +85,7 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         //link: https://www.usbmadesimple.co.uk/ums_ms_desc_dev.htm
         .device_subclass = 0,
         .device_protocol = 0,
-        .max_packet_size0 = 16,//16 byte max packet size for 14 keys at once to start, changed from 64
+        .max_packet_size0 = 16, //16 byte max packet size for 14 keys at once to start, changed from 64
         .vendor = 0x0000, // set to 0 for now, would probably be ok to set to the raspberry pi VID if they have one
         .product = 1,
         .bcd_device = 0x0100,
@@ -116,8 +118,8 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .num_interfaces = 1,
         .configuration_value = 1,
         .configuration_s = 0,
-        .attributes = 0xa0,//0xa0 means remote wakeup (not self-powered)
-        .max_power = 0x32,//100 mA
+        .attributes = 0xa0, //0xa0 means remote wakeup (not self-powered)
+        .max_power = 0x32, //100 mA
     },
     .lang_descriptor = "\x04\x03\x09\x04", // length || string descriptor (0x03) || Engl (0x0409)
     .descriptor_strings = &.{
@@ -136,9 +138,7 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
             .num_descriptors = 1,
             .report_length = 34,
         },
-        .report_descriptor = &.{
-	    //.
-	},//&usb.hid.ReportDescriptorFidoU2f,
+        .report_descriptor = &ReportDescriptorZigMK, //&usb.hid.ReportDescriptorFidoU2f,
     },
     // Here we pass all endpoints to the config
     // Dont forget to pass EP0_[IN|OUT] in the order seen below!
