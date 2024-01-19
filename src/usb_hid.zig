@@ -116,8 +116,8 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
         .num_interfaces = 1,
         .configuration_value = 1,
         .configuration_s = 0,
-        .attributes = 0xc0,
-        .max_power = 0x32,
+        .attributes = 0xa0,//0xa0 means remote wakeup (not self-powered)
+        .max_power = 0x32,//100 mA
     },
     .lang_descriptor = "\x04\x03\x09\x04", // length || string descriptor (0x03) || Engl (0x0409)
     .descriptor_strings = &.{
@@ -136,7 +136,9 @@ pub var DEVICE_CONFIGURATION: usb.DeviceConfiguration = .{
             .num_descriptors = 1,
             .report_length = 34,
         },
-        .report_descriptor = &usb.hid.ReportDescriptorFidoU2f,
+        .report_descriptor = &.{
+	    //.
+	},//&usb.hid.ReportDescriptorFidoU2f,
     },
     // Here we pass all endpoints to the config
     // Dont forget to pass EP0_[IN|OUT] in the order seen below!
