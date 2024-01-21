@@ -36,7 +36,7 @@ const ws2812_program = blk: {
 
 const pio: Pio = .pio0;
 const sm: StateMachine = .sm0;
-const led_pin = gpio.num(3);
+const led_pin = gpio.num(1);
 
 pub fn main() void {
     pio.gpio_init(led_pin);
