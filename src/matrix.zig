@@ -43,4 +43,7 @@ pub const USBBuffer = struct {
     }
 };
 
-pub fn scan() Matrix {}
+pub fn scan() Matrix {} // Get changes from matrix
+
+pub fn process() !void {} // translate changes from scan() to keycodes and
+// then send them to USB
