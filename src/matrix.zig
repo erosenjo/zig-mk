@@ -3,6 +3,7 @@
 const std = @import("std");
 const KC = @import("keycodes.zig").KC;
 
+// test keyboard is [Shift] [Z] [X] [C]
 const Matrix = struct { .{ .{ 0, 0 }, .{ 0, 1 }, .{ 0, 2 } } };
 
 pub const USBBuffer = struct {
@@ -12,7 +13,7 @@ pub const USBBuffer = struct {
     pub fn init() !USBBuffer {
         return USBBuffer{
             .mods = 0,
-            .keys = [_]u8{0} ** 14,
+            .keys = [_]u8{0} ** 14, // initializes array to 0
         };
     }
 
@@ -63,7 +64,9 @@ pub const USBBuffer = struct {
     }
 };
 
-pub fn scan() Matrix {} // Get changes from matrix
+pub fn scan(oldarray: Matrix) Matrix { // Get changes from matrix
+    _ = oldarray;
+}
 
 pub fn process() !void {} // translate changes from scan() to keycodes and
 // then send them to USB
