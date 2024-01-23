@@ -1,5 +1,5 @@
 pub const KC = enum(u8) {
-    a = "\x04",
+    a = '\x04',
     b,
     c,
     d,
@@ -25,7 +25,7 @@ pub const KC = enum(u8) {
     x,
     y,
     z,
-    lctrl = "\xE0",
+    lctrl = '\xE0',
     lshift,
     lalt,
     lsuper,
