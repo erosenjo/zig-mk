@@ -3,9 +3,6 @@
 const std = @import("std");
 const KC = @import("keycodes.zig").KC;
 
-// test keyboard is [Shift] [Z] [X] [C]
-const Matrix = struct { .{ .{ 0, 0 }, .{ 0, 1 }, .{ 0, 2 } } };
-
 pub const USBBuffer = struct {
     mods: u8, // Modifier bitmap (is there a way to make this an enum?)
     keys: [14]u8, // Array of keycodes
@@ -63,13 +60,6 @@ pub const USBBuffer = struct {
         return error.KeyNotPressed;
     }
 };
-
-pub fn scan(oldarray: Matrix) Matrix { // Get changes from matrix
-    _ = oldarray;
-}
-
-pub fn process() !void {} // translate changes from scan() to keycodes and
-// then send them to USB
 
 // Tests
 
