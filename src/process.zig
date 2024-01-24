@@ -4,9 +4,9 @@
 
 //import USB-buffer.zig
 
-const USBBuffer = struct{
-	placeholder : u8,
-};
+//const USBBuffer = struct{
+//	placeholder : u8,
+//};
 
 
 const numkeys: u8 = 4;
@@ -26,9 +26,9 @@ pub fn process(comptime T: anytype, oldarray: [][]T , newarray: [][]T , buff: *U
 	for (chg) |row|{
 		for (row) |col|{
 			if (col == 1){
-				USBBuffer.press(translate(rowps, colps));
+				buff.*.press(translate(rowps, colps)); //deref pointer to modify value
 			}else if(col == -1){
-				USBBuffer.depress(translate(rowps, colps));
+				buff.*.depress(translate(rowps, colps)); //deref pointer to modify value
 			}
 			colps += 1;
 		}
