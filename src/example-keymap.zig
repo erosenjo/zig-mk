@@ -1,4 +1,5 @@
 //! Declaring Keymap
+const KC = @import("keycodes.zig").KC;
 
 // rows + columns
 pub const row2col = .{
@@ -15,3 +16,6 @@ pub const row2col = .{
 
 //codes --> output
 
+pub const keymap = .{
+    .{ KC.lshift, KC.z, KC.x, KC.c },
+};
