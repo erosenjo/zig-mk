@@ -47,13 +47,13 @@ test "Compare arrays" {
 
     array_b[0][2] = 1;
 
-    var result_press = compare(array_a, array_b);
-    const expected_result_press = [_][4]array_data_type{[_]array_data_type{ 0, 0, 1, 0 }};
-    var result_depress = compare(array_b, array_a);
-    const expected_result_depress = [_][4]array_data_type{[_]array_data_type{ 0, 0, -1, 0 }};
+    var result_press = compare(array_a, array_b)[0];
+    const expected_result_press = [_]array_data_type{ 0, 0, 1, 0 };
+    var result_depress = compare(array_b, array_a)[0];
+    const expected_result_depress = [_]array_data_type{ 0, 0, -1, 0 };
 
-    try testing.expect(std.mem.eql(ArrayType, result_press, expected_result_press));
-    try testing.expect(std.mem.eql(ArrayType, result_depress, expected_result_depress));
+    try testing.expect(std.mem.eql(array_data_type, result_press[0..], expected_result_press[0..]));
+    try testing.expect(std.mem.eql(array_data_type, result_depress[0..], expected_result_depress[0..]));
 }
 test "Array of changes to USB" {
     return error.SkipZigTest;
