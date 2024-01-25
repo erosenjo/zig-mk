@@ -4,7 +4,37 @@ const USBBuffer = @import("usb-buffer.zig").USBBuffer;
 const KC = @import("keycodes.zig").KC;
 
 // test keyboard is [Shift] [Z] [X] [C]
-const Matrix = struct { .{ .{ 0, 0 }, .{ 0, 1 }, .{ 0, 2 } } };
+//                          [Space]
+const Matrix = struct {
+    .{ .{ 0, 0 }, .{ 0, 1 }, .{ 0, 2 }, .{ 0, 3 } },
+    .{.{ 1, 1 }},
+};
+const keymap = @import("example-keymap.zig").keymap;
+
+fn map2code(comptime map: anytype) [][]?u8 {
+    var array: [map.len][map[0].len]?u8 = undefined;
+    inline for (map, 0..) |row, i| {
+        inline for (row, 0..) |pos, j| {
+            array[i][j] = result: {
+                if (pos) |key| {
+                    break :result @intFromEnum(key);
+                } else {
+                    break :result null;
+                }
+            };
+        }
+    }
+    return array;
+}
+
+test "test example keymap conversion" {
+    const result = map2code(keymap);
+    const expected_row0 = [_]?u8{ '\xE1', '\x1D', '\x1B', '\x06' };
+    const expected_row1 = [_]?u8{ null, '\x2C', null, null };
+
+    try testing.expect(std.mem.eql(?u8, result[0], &expected_row0));
+    try testing.expect(std.mem.eql(?u8, result[1], &expected_row1));
+}
 
 pub const KeyChange = enum(i2) {
     depress = -1,
