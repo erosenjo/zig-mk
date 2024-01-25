@@ -18,4 +18,5 @@ pub const row2col = .{
 
 pub const keymap = .{
     .{ KC.lshift, KC.z, KC.x, KC.c },
+    .{ KC.none, KC.space, KC.none, KC.none },
 };
