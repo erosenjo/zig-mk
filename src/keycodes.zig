@@ -1,4 +1,5 @@
 pub const KC = enum(u8) {
+    none = 0,
     a = '\x04',
     b,
     c,
@@ -25,6 +26,11 @@ pub const KC = enum(u8) {
     x,
     y,
     z,
+    enter = '\x28',
+    escape,
+    backspace,
+    tab,
+    space,
     lctrl = '\xE0',
     lshift,
     lalt,
