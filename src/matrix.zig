@@ -27,6 +27,8 @@ fn map2code(comptime map: anytype) !*[map.len][map[0].len]?u8 {
     return &array;
 }
 
+pub const keymapu8 = map2code(keymap);
+
 test "test example keymap conversion" {
     const result = try map2code(keymap);
     const expected_row0 = [_]?u8{ '\xE1', '\x1D', '\x1B', '\x06' };
