@@ -13,7 +13,7 @@ const buffer = @import("usb-buffer.zig");
 const funcaccess = @import("matrix.zig");
 
 //example code
-fn code(r: u8, c: u8) u8 { //may need to return KC type instead
+fn getcode(r: u8, c: u8) u8 { //may need to return KC type instead
     return (keymap[r][c]);
 }
 
@@ -28,9 +28,9 @@ pub fn process(comptime T: anytype, oldarray: [][]T, newarray: [][]T, buff: *buf
     for (chg, 0..) |row, rowps| {
         for (row, 0..) |col, colps| {
             if (col == 1) {
-                buff.*.press(code(rowps, colps)); //deref pointer to modify value
+                buff.*.press(getcode(rowps, colps)); //deref pointer to modify value
             } else if (col == -1) {
-                buff.*.depress(code(rowps, colps)); //deref pointer to modify value
+                buff.*.depress(getcode(rowps, colps)); //deref pointer to modify value
             }
         }
     }
