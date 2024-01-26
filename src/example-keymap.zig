@@ -16,7 +16,9 @@ pub const row2col = .{
 
 //codes --> output
 
+// test keyboard is [Shift] [Z] [X] [C]
+//                          [Space]
 pub const keymap = .{
     .{ KC.lshift, KC.z, KC.x, KC.c },
-    .{ KC.none, KC.space, KC.none, KC.none },
+    .{ null, KC.space, null, null },
 };

@@ -23,6 +23,14 @@ pub const USBBuffer = struct {
         //            if (ctr >= 14) return error.TooManyKeys;
         //        }
         //        self.keys[ctr] = keycode; // if empty is found, set it to key
+        var is_modifier = keycode >= '\xE0' and keycode <= '\xE7';
+        if (is_modifier) {
+            var mod_shift: u3 = @truncate(keycode);
+            var mod_bit: u8 = 1;
+            mod_bit <<= mod_shift;
+            self.mods |= mod_bit;
+            return;
+        }
         // for implementation
         for (&self.keys) |*key| {
             if (key.* == 0) { // if empty spot found, set it to KC and return
@@ -43,6 +51,14 @@ pub const USBBuffer = struct {
         //     if (ctr >= 14) return error.KeyNotPressed;
         // }
         // self.keys[ctr] = 0; // if key is found, set it to empty
+        var is_modifier = keycode >= 0xE0 and keycode <= 0xE7;
+        if (is_modifier) {
+            var mod_shift: u3 = @truncate(keycode);
+            var mod_bit: u8 = 1;
+            mod_bit <<= mod_shift;
+            self.mods &= ~mod_bit;
+            return;
+        }
         // for implementation
         for (&self.keys, 1..) |*key, i| {
             std.debug.print("keycode at {d} is: {d}\n", .{ i, key.* });
@@ -90,4 +106,42 @@ test "Keys shift down" {
     try buffer.depress(@intFromEnum(KC.a));
 
     try testing.expect(buffer.keys[0] == @intFromEnum(KC.b));
+}
+
+test "modifier press" {
+    var buffer = try USBBuffer.init();
+
+    try buffer.press(@intFromEnum(KC.lshift));
+
+    try testing.expect(buffer.mods == 2);
+}
+
+test "modifier press and release" {
+    var buffer = try USBBuffer.init();
+
+    try buffer.press(@intFromEnum(KC.lshift));
+
+    try testing.expect(buffer.mods == 2);
+
+    try buffer.depress(@intFromEnum(KC.lshift));
+
+    try testing.expect(buffer.mods == 0);
+}
+
+//not expecting this to happen, but making sure that it doesn't break anything
+test "double press modifier" {
+    var buffer = try USBBuffer.init();
+
+    try buffer.press(@intFromEnum(KC.lshift));
+    try buffer.press(@intFromEnum(KC.lshift));
+
+    try testing.expect(buffer.mods == 2);
+}
+
+test "release key not pressed" {
+    var buffer = try USBBuffer.init();
+
+    try buffer.depress(@intFromEnum(KC.lshift));
+
+    try testing.expect(buffer.mods == 0);
 }
