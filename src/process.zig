@@ -8,7 +8,7 @@
 
 //const numkeys: u8 = 4;
 
-const keymap = @import("example-keymap.zig");
+const keymap = @import("matrix.zig").keymapu8;//@import("example-keymap.zig");
 const buffer = @import("usb-buffer.zig");
 const funcaccess = @import("matrix.zig");
 
