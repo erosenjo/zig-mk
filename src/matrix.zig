@@ -28,23 +28,23 @@ test "test example keymap conversion" {
     const expected_row0 = [_]?u8{ '\xE1', '\x1D', '\x1B', '\x06' };
     const expected_row1 = [_]?u8{ null, '\x2C', null, null };
 
-    std.debug.print("\n", .{});
-    for (result[0]) |item| {
-        std.debug.print("{?x} ", .{item});
-    }
-    std.debug.print("\n", .{});
-    for (expected_row0) |item| {
-        std.debug.print("{?x} ", .{item});
-    }
-    std.debug.print("\n", .{});
-    for (result[1]) |item| {
-        std.debug.print("{?x} ", .{item});
-    }
-    std.debug.print("\n", .{});
-    for (expected_row1) |item| {
-        std.debug.print("{?x} ", .{item});
-    }
-    std.debug.print("\n", .{});
+    // std.debug.print("\n", .{});
+    // for (result[0]) |item| {
+    //     std.debug.print("{?x} ", .{item});
+    // }
+    // std.debug.print("\n", .{});
+    // for (expected_row0) |item| {
+    //     std.debug.print("{?x} ", .{item});
+    // }
+    // std.debug.print("\n", .{});
+    // for (result[1]) |item| {
+    //     std.debug.print("{?x} ", .{item});
+    // }
+    // std.debug.print("\n", .{});
+    // for (expected_row1) |item| {
+    //     std.debug.print("{?x} ", .{item});
+    // }
+    // std.debug.print("\n", .{});
 
     try testing.expect(std.mem.eql(?u8, &result[0], &expected_row0));
     try testing.expect(std.mem.eql(?u8, &result[1], &expected_row1));
@@ -62,7 +62,7 @@ const num_columns = 4;
 const array_data_type = i2;
 const ArrayType = [num_rows][num_columns]array_data_type;
 
-fn makeChangeArray() ArrayType {
+pub fn makeChangeArray() ArrayType {
     return [num_rows][num_columns]array_data_type{[_]array_data_type{0} ** num_columns} ** num_rows;
 }
 
@@ -92,6 +92,14 @@ test "Compare arrays" {
     var result_depress = compare(array_b, array_a)[0];
     const expected_result_depress = [_]array_data_type{ 0, 0, -1, 0 };
 
-    try testing.expect(std.mem.eql(array_data_type, result_press[0..], expected_result_press[0..]));
-    try testing.expect(std.mem.eql(array_data_type, result_depress[0..], expected_result_depress[0..]));
+    try testing.expect(std.mem.eql(
+        array_data_type,
+        result_press[0..],
+        expected_result_press[0..],
+    ));
+    try testing.expect(std.mem.eql(
+        array_data_type,
+        result_depress[0..],
+        expected_result_depress[0..],
+    ));
 }
